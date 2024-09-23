@@ -1,0 +1,229 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+int data;
+struct node *next;
+};
+struct node *head=NULL;
+void beginsert ();
+void lastinsert ();
+void insertatspecified();
+void begin_delete();
+void last_delete();
+void delete_from_middle();
+void display();
+void main ()
+{
+int choice =0;
+clrscr();
+printf("\n*********Main Menu*********\n");
+printf("\nChoose one option from the following list ...\n");
+printf("\n===============================================\n");
+printf("\n1.Insert in begining\n2.Insert at last\n 3.Insert at specified location \n 4.Delete from Beginning\n 5.Delete from last\n6.random_delete\n7.display\n8.Exit\n");
+while(1)
+{
+printf("\nEnter your choice?\n");
+scanf("\n%d",&choice);
+switch(choice)
+{
+case 1:
+beginsert();
+display();
+break;
+case 2:
+lastinsert();
+display();
+break;
+case 3:
+insertatspecified();
+display();
+break;
+case 4:
+begin_delete();
+display();
+break;
+case 5:
+last_delete();
+display();
+break;
+case 6:
+delete_from_middle();
+display();
+break;
+case 7:
+display();
+break;
+case 8:
+exit(0);
+break;
+default:
+printf("Please enter valid choice..");
+}
+}
+}
+void beginsert()
+{
+struct node *newn,*temp;
+int value;
+temp = head;
+newn = (struct node *)malloc(sizeof(struct node));
+printf("\nEnter the node data?");
+scanf("%d",&value);
+newn -> data = value;
+if(head == NULL)
+{
+head = newn;
+newn -> next = head;
+}
+else
+{
+while(temp->next != head)
+{
+temp = temp->next;
+}
+newn->next = head;
+temp -> next = newn;
+head = newn;
+}
+printf("\nnode inserted\n");
+}
+void lastinsert()
+{
+struct node *newn,*temp;
+int value;
+temp=head;
+newn = (struct node *)malloc(sizeof(struct node));
+printf("\nEnter Data?");
+scanf("%d",&value);
+newn->data = value;
+if(head == NULL)
+{
+head = newn;
+newn -> next = head;
+}
+else
+{
+ while(temp -> next != head)
+{
+temp = temp -> next;
+}
+temp -> next = newn;
+newn -> next = head;
+temp=newn;
+}
+printf("\nnode inserted\n");
+}
+void insertatspecified()
+{
+ struct node *newn,*temp,*var;
+int value,loc;
+temp=head;
+newn = (struct node *)malloc(sizeof(struct node));
+printf("enter the specified location value");
+scanf("%d",&loc);
+printf("\nEnter Data?");
+scanf("%d",&value);
+newn->data = value;
+if(head == NULL)
+{
+head = newn;
+newn -> next = head;
+}
+else
+{
+    while(temp->data!=loc)
+    {
+	var=temp;
+	temp=temp->next;
+    }
+    newn->next=var->next;
+    var->next=newn;
+}
+printf("node inserted");
+}
+void begin_delete()
+{
+struct node *temp,*var;
+temp=var=head;
+if(temp == NULL)
+{
+printf("\nLinked list is empty");
+}
+else
+{
+while(var->next != head)
+{
+var=var->next;
+}
+head=temp->next;
+temp->next=NULL;
+var->next=head;
+printf("\nnode deleted\n");
+}
+}
+
+void last_delete()
+{
+struct node *temp,*var;
+temp=head;
+if(temp==NULL)
+{
+printf("\nUNDERFLOW");
+}
+else
+{
+    while(temp->next!=head)
+{
+var=temp;
+temp=temp->next;
+}
+var->next = temp -> next;
+temp->next=NULL;
+free(temp);
+printf("\nnode deleted\n");
+}
+}
+void delete_from_middle()
+{
+struct node *temp,*var;
+int value;
+temp=head;
+printf("\nenter the data that you want to delete from the list shown above");
+scanf("%d",&value);
+if(temp==NULL)
+{
+printf("\nSORRY...there is no %d element",value);
+}
+else
+{
+while(temp->data!=value)
+{
+var=temp;
+temp=temp->next;
+}
+var->next=temp->next;
+temp->next=NULL;
+}
+printf("\ndata deleted from list is %d",value);
+free(temp);
+}
+void display()
+{
+struct node *trav;
+trav=head;
+if(head == NULL)
+{
+printf("\nnothing to print");
+}
+else
+{
+printf("\n printing values ... \n");
+while(trav -> next != head)
+{
+printf("%d\n", trav -> data);
+trav = trav -> next;
+}
+printf("%d\n", trav -> data);
+}
+}
